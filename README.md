@@ -8,7 +8,7 @@
 2. Возможность добавлять недостающую информацию по темам
 3. Дает ссылки на нужные источники
 
-Команда: Loiko(GitHub:ViktoriaLoiko), Klimenko, Evstafieva(GitHub: OlgaEvfs)
+Команда: Loiko(GitHub:ViktoriaLoiko), Klimenko(GitHub: nasty-xd), Evstafieva(GitHub: OlgaEvfs)
 
 Инструменты: 
 1. Работа с базой данных: SQLite (для хранения информации о программировании)
