@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Chat VAO
+{% endblock %}
+
+{% block body %}
+
+  <!-- Контейнер для вертикальных блоков -->
+
+    <div class="row min-vh-100" style="background-color: #2B1150;">
+    <!-- Первый блок (небольшой) -->
+        <div class="col-1 p-3" style="background-color: #2B1150;"> 
+        </div>
+    
+    <!-- Второй блок (побольше) -->
+        <div class="col-2 p-3" style="background-color: #8673AB;">
+            <p class="fs-5">Это чат вао, ему можно задать вопросы по темам связанными с программированием</p>
+        </div>
+
+    <!-- Третий блок (самый большой) -->
+        <div class="col-8 p-3" style="background-color: #9F9F9F;" >
+            {% if step == 1 %}
+            <p>Выберите действие (введите номер):</p>
+            <ol>
+                <li>Задать вопрос</li>
+                <li>Добавить новый вопрос или ответ</li>
+                <li>Изменить вопрос</li>
+                <li>Изменить ответ</li>
+                <li>Изменить категорию вопроса</li>
+            </ol>
+            <form method="POST">
+                <input type="text" name="user_input" placeholder="Введите номер действия" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 2 and action == "1" %}
+            <p>Введите ваш вопрос:</p>
+            <form method="POST">
+                <input type="text" name="user_input" placeholder="Ваш вопрос" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 2 and action == "2" %}
+            <p>Введите новый вопрос, ответ и категорию:</p>
+            <form method="POST">
+                <input type="text" name="new_question" placeholder="Новый вопрос" required>
+                <input type="text" name="new_answer" placeholder="Ответ" required>
+                <input type="text" name="new_category" placeholder="Категория" required>
+                <button type="submit">Добавить</button>
+            </form>
+
+        {% elif step == 2 and action == "3" %}
+            <p>Список доступных категорий:</p>
+            <ul>
+                {% for category in categories %}
+                    <li>{{ category }}</li>
+                {% endfor %}
+            </ul>
+            <a href="/">Вернуться в главное меню</a>
+
+        {% elif step == 3 and action == "1" %}
+            <p>Ответ на ваш вопрос:</p>
+            <p>{{ answer }}</p>
+            <a href="/">Вернуться в главное меню</a>
+
+        {% endif %}
+    
+        </div>
+    </div>
+{% endblock %}
