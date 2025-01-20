@@ -23,7 +23,50 @@ Chat VAO
     <!-- Третий блок (самый большой) -->
         <div class="col-8 p-3" style="background-color: #9F9F9F;" >
             <h5>чат</h5>
-    
+    {% if step == 1 %}
+            <p>Выберите действие (введите номер):</p>
+            <ol>
+                <li>Задать вопрос</li>
+                <li>Добавить новый вопрос</li>
+                <li>Просмотреть категории</li>
+                <li>Выйти</li>
+            </ol>
+            <form method="POST">
+                <input type="text" name="user_input" placeholder="Введите номер действия" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 2 and action == "1" %}
+            <p>Введите ваш вопрос:</p>
+            <form method="POST">
+                <input type="text" name="user_input" placeholder="Ваш вопрос" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 2 and action == "2" %}
+            <p>Введите новый вопрос, ответ и категорию:</p>
+            <form method="POST">
+                <input type="text" name="new_question" placeholder="Новый вопрос" required>
+                <input type="text" name="new_answer" placeholder="Ответ" required>
+                <input type="text" name="new_category" placeholder="Категория" required>
+                <button type="submit">Добавить</button>
+            </form>
+
+        {% elif step == 2 and action == "3" %}
+            <p>Список доступных категорий:</p>
+            <ul>
+                {% for category in categories %}
+                    <li>{{ category }}</li>
+                {% endfor %}
+            </ul>
+            <a href="/">Вернуться в главное меню</a>
+
+        {% elif step == 3 and action == "1" %}
+            <p>Ответ на ваш вопрос:</p>
+            <p>{{ answer }}</p>
+            <a href="/">Вернуться в главное меню</a>
+
+        {% endif %}
         </div>
     </div>
 {% endblock %}
