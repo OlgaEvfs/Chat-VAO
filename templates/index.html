@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Chat VAO
+{% endblock %}
+
+{% block body %}
+<div class="row min-vh-100" style="background-color: #2B1150;">
+    <div class="col-1 p-3" style="background-color: #2B1150;">
+    </div>
+
+    <div class="col-2 p-3" style="background-color: #8673AB;">
+        <p class="fs-5">Это чат VAO, ему можно задать вопросы по темам, связанным с программированием.</p>
+    </div>
+
+    <div class="col-8 p-3" style="background-color: #9F9F9F;">
+        {% if message %}
+            <p><strong>{{ message }}</strong></p>
+        {% endif %}
+
+        {% if step == 1 %}
+            <p><strong>Добро пожаловать в чат VAO!</strong></p>
+            <p>Выберите действие (введите номер):</p>
+            <ol>
+                <li>Задать вопрос</li>
+                <li>Добавить новый вопрос или ответ</li>
+                <li>Изменить вопрос</li>
+                <li>Изменить ответ</li>
+                <li>Изменить категорию вопроса</li>
+            </ol>
+            <form method="POST">
+                <input type="text" name="user_input" placeholder="Введите номер действия" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 2 and action == "1" %}
+            <p>Выберите категорию для вашего вопроса:</p>
+            <form method="POST">
+                <select name="category_choice" required>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 3 %}
+            <p>Выберите вопрос из категории:</p>
+            <form method="POST">
+                <select name="question_choice" required>
+                    {% for question in questions %}
+                        <option value="{{ question }}">{{ question }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 2 and action == "2" %}
+            <p>Введите новый вопрос, ответ и категорию:</p>
+            <form method="POST">
+                <input type="text" name="new_question" placeholder="Новый вопрос" required>
+                <input type="text" name="new_answer" placeholder="Ответ" required>
+                <input type="text" name="new_category" placeholder="Категория" required>
+                <button type="submit">Добавить</button>
+            </form>
+
+        {% elif step == 2 and action == "3" %}
+            <p>Выберите вопрос для изменения:</p>
+            <form method="POST">
+                <select name="question_choice" required>
+                    {% for question in questions %}
+                        <option value="{{ question }}">{{ question }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 4 %}
+            <p>Введите новый вопрос:</p>
+            <form method="POST">
+                <input type="text" name="new_question" placeholder="Новый вопрос" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 5 %}
+            <p>Введите новый ответ:</p>
+            <form method="POST">
+                <input type="text" name="new_answer" placeholder="Новый ответ" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% elif step == 6 %}
+            <p>Введите новую категорию:</p>
+            <form method="POST">
+                <input type="text" name="new_category" placeholder="Новая категория" required>
+                <button type="submit">Отправить</button>
+            </form>
+
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
