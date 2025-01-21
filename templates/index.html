@@ -6,20 +6,21 @@ Chat VAO
 
 {% block body %}
 
-  <!-- Контейнер для вертикальных блоков -->
-
-    <div class="row min-vh-100" style="background-color: #2B1150;">
-    <!-- Первый блок (небольшой) -->
-        <div class="col-1 p-3" style="background-color: #2B1150;"> 
+<!-- Контейнер для вертикальных блоков -->
+<div class="container-fluid" style="background-color: #2B1150; min-height: 100vh; display: flex; flex-direction: column;">
+    <div class="row" style="flex-grow: 1;">
+        <!-- Первый блок (небольшой) -->
+        <div class="col-1 p-3" style="background-color: #2B1150;">
         </div>
     
-    <!-- Второй блок (побольше) -->
-        <div class="col-2 p-3" style="background-color: #8673AB;">
+        <!-- Второй блок (побольше) -->
+        <div class="col-12 col-md-2 p-3" style="background-color: #8673AB;">
             <p class="fs-5">Это чат вао, ему можно задать вопросы по темам связанными с программированием</p>
+            <img src="{{ url_for('static', filename='images/kapi.jpg') }}" class="img-fluid" alt="Капибара за компьютером">
         </div>
 
-    <!-- Третий блок (самый большой) -->
-        <div class="col-8 p-3" style="background-color: #9F9F9F;" >
+        <!-- Третий блок (самый большой) -->
+        <div class="col-12 col-md-8 p-3" style="background-color: #9F9F9F; overflow-x: hidden; display: flex; flex-direction: column;">
             {% if step == 1 %}
             <p>Выберите действие (введите номер):</p>
             <ol>
@@ -68,4 +69,5 @@ Chat VAO
     
         </div>
     </div>
+</div>
 {% endblock %}
