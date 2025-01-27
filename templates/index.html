@@ -33,15 +33,15 @@ Chat VAO
                 <button type="submit">Отправить</button>
             </form>
 
-        {% elif step == 2 and action == "1" %}
-            <p>Выберите категорию для вашего вопроса:</p>
+        {% elif step == 2 and action in ['1', '2'] %}
+            <p>Выберите категорию:</p>
             <form method="POST">
                 <select name="category_choice" required>
                     {% for category in categories %}
                         <option value="{{ category }}">{{ category }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit">Отправить</button>
+                <button type="submit">Выбрать категорию</button>
             </form>
 
         {% elif step == 3 %}
@@ -55,48 +55,23 @@ Chat VAO
                 <button type="submit">Отправить</button>
             </form>
 
-        {% elif step == 2 and action == "2" %}
-            <p>Введите новый вопрос, ответ и категорию:</p>
+        {% elif step == 7 %}
+            <p>Введите новый вопрос и ответ:</p>
             <form method="POST">
                 <input type="text" name="new_question" placeholder="Новый вопрос" required>
                 <input type="text" name="new_answer" placeholder="Ответ" required>
-                <input type="text" name="new_category" placeholder="Категория" required>
                 <button type="submit">Добавить</button>
             </form>
 
-        {% elif step == 2 and action == "3" %}
-            <p>Выберите вопрос для изменения:</p>
-            <form method="POST">
-                <select name="question_choice" required>
-                    {% for question in questions %}
-                        <option value="{{ question }}">{{ question }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Отправить</button>
-            </form>
+        {% endif %}
 
-        {% elif step == 4 %}
-            <p>Введите новый вопрос:</p>
-            <form method="POST">
-                <input type="text" name="new_question" placeholder="Новый вопрос" required>
-                <button type="submit">Отправить</button>
+        <!-- Кнопка назад -->
+        {% if step > 1 %}
+            <form method="POST" style="margin-top: 20px;">
+                <button type="submit" name="back_button">Назад</button>
             </form>
-
-        {% elif step == 5 %}
-            <p>Введите новый ответ:</p>
-            <form method="POST">
-                <input type="text" name="new_answer" placeholder="Новый ответ" required>
-                <button type="submit">Отправить</button>
-            </form>
-
-        {% elif step == 6 %}
-            <p>Введите новую категорию:</p>
-            <form method="POST">
-                <input type="text" name="new_category" placeholder="Новая категория" required>
-                <button type="submit">Отправить</button>
-            </form>
-
         {% endif %}
     </div>
 </div>
 {% endblock %}
+
