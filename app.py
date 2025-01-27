@@ -1,3 +1,4 @@
+import sqlite3
 from flask import Flask, render_template, request, session
 from chat_bot import get_categories, get_questions_by_category, add_new_question_answer, update_question, update_answer, update_category, get_answer_from_db
 
@@ -25,6 +26,9 @@ def index():
             session['step'] -= 1
             if session['step'] < 1:
                 session['step'] = 1
+            # Очистка выбранной категории или вопроса
+            session.pop('category_choice', None)
+            session.pop('question_choice', None)
 
         # Первый шаг: выбор действия
         if step == 1:
@@ -150,12 +154,37 @@ def index():
 
 # Функция добавления нового вопроса и ответа
 def add_new_question_answer(new_question, new_answer, new_category):
-    # Логика добавления вопроса и ответа в базу данных
-    print(f"Добавлен вопрос: {new_question}, ответ: {new_answer}, категория: {new_category}")
-    return "Вопрос успешно добавлен!"
+    try:
+        connection = sqlite3.connect('faq.db')  # Подключаемся к базе данных
+        cursor = connection.cursor()
+
+        # Проверяем, существует ли уже этот вопрос
+        cursor.execute("SELECT 1 FROM questions_answers WHERE question = ?", (new_question,))
+        if cursor.fetchone():
+            return "Этот вопрос уже существует в базе данных."
+
+        # Проверяем, существует ли категория
+        cursor.execute("SELECT 1 FROM categories WHERE category_name = ?", (new_category,))
+        if not cursor.fetchone():
+            # Если категории нет, создаем её
+            cursor.execute("INSERT INTO categories (category_name) VALUES (?)", (new_category,))
+            connection.commit()  # Сохраняем изменения
+            return f"Категория '{new_category}' добавлена в базу данных."
+
+        # Добавляем вопрос, ответ и категорию в базу данных
+        cursor.execute("INSERT INTO questions_answers (question, answer, category) VALUES (?, ?, ?)",
+                       (new_question, new_answer, new_category))
+        connection.commit()  # Сохраняем изменения
+        return f"Вопрос '{new_question}' и ответ успешно добавлены в базу данных!"
+
+    except Exception as e:
+        return f"Произошла ошибка при добавлении данных: {str(e)}"
+    finally:
+        connection.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
